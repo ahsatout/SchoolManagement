@@ -2,14 +2,15 @@ package com.hyh.schoolmanagement.dao.impl;
 
 import com.hyh.schoolmanagement.dao.Dao;
 import com.hyh.schoolmanagement.dao.Database;
-import com.hyh.schoolmanagement.model.Identifiable;
+import com.hyh.schoolmanagement.model.Entity;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.Map.Entry;
 
-public abstract class DefaultDao<T extends Identifiable> implements Dao<T> {
+public abstract class DefaultDao<T extends Entity> implements Dao<T> {
 	Database database = Database.getInstance();
 
 	public abstract String getTableName();

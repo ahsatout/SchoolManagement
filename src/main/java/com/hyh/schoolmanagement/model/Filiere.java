@@ -1,20 +1,13 @@
 package com.hyh.schoolmanagement.model;
 
-import com.hyh.schoolmanagement.annotation.Column;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Filiere implements Identifiable {
-    @Column(name = "id", type = "INTEGER", primaryKey = true)
+public class Filiere implements Entity {
     private Long id;
-    @Column(name = "name", type = "VARCHAR(10)")
     private String name;
-    @Column(name = "acronym", type = "VARCHAR(6)")
     private String acronym;
     List<Module> modules = new ArrayList<>();
-
-    public Filiere() { }
 
     public Filiere(String name, String acronym) {
         super();
@@ -37,10 +30,11 @@ public class Filiere implements Identifiable {
         this.acronym = acronym;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
-
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
