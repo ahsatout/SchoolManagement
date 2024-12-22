@@ -36,7 +36,7 @@ public class Professor implements Entity {
     @Override
     public String toString() {
         return "Professor [id=" + id + ", firstName=" + firstName + ", lastName="
-                + lastName + ", speciality=" + speciality + "]";
+                + lastName +", speciality=" + speciality.getName() + "]";
     }
 
 
