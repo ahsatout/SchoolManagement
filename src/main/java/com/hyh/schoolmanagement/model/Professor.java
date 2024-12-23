@@ -18,7 +18,7 @@ public class Professor implements Identifiable {
 	@Column(name = "password", type = "VARCHAR(255)")
 
 	private Speciality speciality;
-	@OneToMany()
+
 	private List<Element> elements;
 
 	public Professor(Long id, String firstName, String lastName, Speciality speciality) {
