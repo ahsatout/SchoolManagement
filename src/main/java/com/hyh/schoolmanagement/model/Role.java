@@ -1,6 +1,6 @@
 package com.hyh.schoolmanagement.model;
 
 public enum Role {
-	ADMINISTRATOR,
+    ADMINISTRATOR,
     PROFESSOR
 }

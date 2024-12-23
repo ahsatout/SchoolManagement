@@ -1,25 +1,13 @@
 package com.hyh.schoolmanagement.model;
 
-import com.hyh.schoolmanagement.annotation.Column;
-import com.hyh.schoolmanagement.annotation.Table;
 
-@Table(name = "user")
 public class User implements Cloneable {
-
-    @Column(name = "id", type = "BIGINT", primaryKey = true)
-    private Long id;
-
-    @Column(name = "username", type = "VARCHAR(255)")
+    private long id;
     private String username;
-
-    @Column(name = "password", type = "VARCHAR(255)")
     private String password;
-
-    @Column(name = "role", type = "VARCHAR(255)")
     private Role role;
 
-
-    public User(Long id, String username, String password, Role role) {
+    public User(long id, String username, String password, Role role) {
         super();
         this.id = id;
         this.username = username;
@@ -40,11 +28,11 @@ public class User implements Cloneable {
         return student;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -78,4 +66,3 @@ public class User implements Cloneable {
     }
 
 }
-

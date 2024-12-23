@@ -1,104 +1,87 @@
 package com.hyh.schoolmanagement.model;
 
-import com.hyh.schoolmanagement.annotation.Column;
-import com.hyh.schoolmanagement.annotation.OneToMany;
-import com.hyh.schoolmanagement.annotation.Table;
-
 import java.util.List;
 
-@Table(name="Professeur")
-public class Professor implements Identifiable {
+public class Professor implements Entity {
 
-	@Column(name = "id", type = "BIGINT", primaryKey = true)
-	private Long id;
-	@Column(name = "firstname", type = "VARCHAR(255)")
-	private String firstName;
-	@Column(name = "lastname", type = "VARCHAR(255)")
-	private String lastName;
-	@Column(name = "password", type = "VARCHAR(255)")
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private Speciality speciality;
+    private List<Element> elements;
 
-	private Speciality speciality;
 
-	private List<Element> elements;
 
-	public Professor(Long id, String firstName, String lastName, Speciality speciality) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.speciality = speciality;
-	}
+    public Professor(Long id, String firstName, String lastName, String speciality) {
+        super();
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.speciality = new Speciality(speciality);
+    }
 
-	public Professor(Long id, String firstName, String lastName, String speciality) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.speciality = new Speciality(speciality);
-	}
+    public Professor(String firstName, String lastName, String speciality) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.speciality = new Speciality(speciality);
+    }
 
-	public Professor(String firstName, String lastName, String speciality) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.speciality = new Speciality(speciality);
-	}
+    @Override
+    public String toString() {
+        return "Professor [id=" + id + ", firstName=" + firstName + ", lastName="
+                + lastName + ", speciality=" + speciality + "]";
+    }
 
-	@Override
-	public String toString() {
-		return "Professor [id=" + id + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", speciality=" + speciality + "]";
-	}
 
-	@Override
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	@Override
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public Speciality getSpeciality() {
-		return speciality;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setSpeciality(Speciality speciality) {
-		this.speciality = speciality;
-	}
+    public Speciality getSpeciality() {
+        return speciality;
+    }
 
-	public void addElement(Element element) {
-		elements.add(element);
-		element.setProfessor(this);
-	}
+    public void setSpeciality(Speciality speciality) {
+        this.speciality = speciality;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		Professor p = (Professor) o;
+    public void addElement(Element element) {
+        elements.add(element);
+        element.setProfessor(this);
+    }
 
-		if (p.getFirstName().equals(getFirstName()) &&
-				p.getLastName().equals(getLastName()) &&
-				p.getSpeciality().getName().equals(getSpeciality().getName())) {
-			return true;
-		} else
-			return false;
-	}
+    @Override
+    public boolean equals(Object o) {
+        Professor p = (Professor) o;
+
+        if (p.getFirstName().equals(getFirstName()) &&
+                p.getLastName().equals(getLastName()) &&
+                p.getSpeciality().getName().equals(getSpeciality().getName())) {
+            return true;
+        } else
+            return false;
+    }
 
 }
