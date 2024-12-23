@@ -5,6 +5,7 @@ src/main/java/**/annotation/
 src/main/java/**/xxx/
 src/main/java/**/modelo/
 
+.idea/vcs.xml
 
 
 target/
