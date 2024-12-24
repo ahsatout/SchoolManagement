@@ -1,11 +1,7 @@
 package com.hyh.schoolmanagement.Service;
 
 import com.hyh.schoolmanagement.dao.ElementDao;
-import com.hyh.schoolmanagement.dao.ModuleDao;
-import com.hyh.schoolmanagement.dao.ProfessorDao;
-import com.hyh.schoolmanagement.dao.impl.ElementDaoImpl;
-import com.hyh.schoolmanagement.dao.impl.ModuleDaoImpl;
-import com.hyh.schoolmanagement.dao.impl.ProfessorDaoImpl;
+
 import com.hyh.schoolmanagement.model.Element;
 
 import java.util.List;
