@@ -18,12 +18,6 @@ pipeline {
             steps {
                 bat 'mvn clean verify'
             }
-            post {
-                always {
-                    // Archive test results
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
         }
 
         stage('SonarQube Analysis') {
