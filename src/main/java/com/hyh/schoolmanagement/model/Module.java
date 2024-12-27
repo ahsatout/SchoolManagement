@@ -3,10 +3,27 @@ package com.hyh.schoolmanagement.model;
 public class Module implements Entity {
     private Long id;
     private String name;
-    // Many-To-One
     private Filiere filiere;
     private Semester semester;
 
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
+
+    // Constructeur par défaut
+    public Module() {}
+
+    // Constructeur avec id et name
+    public Module(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // Getters et setters
     public Long getId() {
         return id;
     }
@@ -31,37 +48,8 @@ public class Module implements Entity {
         this.filiere = filiere;
     }
 
-    public Semester getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
-    }
-
     @Override
     public String toString() {
-        return "Module [id=" + id + ", name=" + name + ", filiere=" + filiere
-                + ", semester=" + semester + "]";
+        return "Module [id=" + id + ", name=" + name + "]";
     }
-
-    public Module(Long id, String name, Filiere filiere, Semester semester) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.filiere = filiere;
-        this.semester = semester;
-    }
-
-    public Module(String name, Filiere filiere, Semester semester) {
-        super();
-        this.name = name;
-        this.filiere = filiere;
-        this.semester = semester;
-    }
-
-    public Module() {
-
-    }
-
 }

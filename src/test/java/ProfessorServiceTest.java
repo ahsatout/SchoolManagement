@@ -27,9 +27,11 @@ class ProfessorServiceTest {
     @Test
     void getAllProfessors_ShouldReturnAllProfessors() {
         // Arrange
+        Speciality speciality1 = new Speciality("Informatique");
+        Speciality speciality2 = new Speciality("Ingénierie de données");
         List<Professor> mockProfessors = Arrays.asList(
-                new Professor(1L, "John", "Doe", "Math"),
-                new Professor(2L, "Jane", "Smith", "Physics")
+                new Professor(1L, "Yassine", "Barka", speciality1),
+                new Professor(2L, "Hassan", "Benhamou", speciality2)
         );
         when(professorDao.findAll()).thenReturn(mockProfessors);
 
@@ -44,7 +46,8 @@ class ProfessorServiceTest {
     @Test
     void getProfessorById_ShouldReturnProfessor_WhenIdExists() {
         // Arrange
-        Professor mockProfessor = new Professor(1L, "John", "Doe", "Math");
+        Speciality speciality = new Speciality("Informatique");
+        Professor mockProfessor = new Professor(1L, "Yassine", "Barka", speciality);
         when(professorDao.findById(1L)).thenReturn(Optional.of(mockProfessor));
 
         // Act
@@ -52,7 +55,7 @@ class ProfessorServiceTest {
 
         // Assert
         assertTrue(professor.isPresent());
-        assertEquals("John", professor.get().getFirstName());
+        assertEquals("Yassine", professor.get().getFirstName());
         verify(professorDao, times(1)).findById(1L);
     }
 
@@ -72,10 +75,10 @@ class ProfessorServiceTest {
     @Test
     void getProfessorsBySpeciality_ShouldReturnProfessors() {
         // Arrange
-        Speciality speciality = new Speciality("Math");
+        Speciality speciality = new Speciality("Informatique");
         List<Professor> mockProfessors = Arrays.asList(
-                new Professor(1L, "John", "Doe", "Math"),
-                new Professor(2L, "Jane", "Smith", "Math")
+                new Professor(1L, "Yassine", "Barka", speciality),
+                new Professor(2L, "Hassan", "Benhamou", speciality)
         );
         when(professorDao.findBySpeciality(speciality)).thenReturn(mockProfessors);
 
@@ -90,7 +93,8 @@ class ProfessorServiceTest {
     @Test
     void addProfessor_ShouldCallDaoSave() {
         // Arrange
-        Professor newProfessor = new Professor("John", "Doe", "Math");
+        Speciality speciality = new Speciality("Informatique");
+        Professor newProfessor = new Professor(null, "Yassine", "Barka", speciality);
 
         // Act
         professorService.addProfessor(newProfessor);
@@ -102,7 +106,8 @@ class ProfessorServiceTest {
     @Test
     void updateProfessor_ShouldCallDaoUpdate() {
         // Arrange
-        Professor existingProfessor = new Professor(1L, "John", "Doe", "Math");
+        Speciality speciality = new Speciality("Informatique");
+        Professor existingProfessor = new Professor(1L, "Yassine", "Barka", speciality);
 
         // Act
         professorService.updateProfessor(existingProfessor);
