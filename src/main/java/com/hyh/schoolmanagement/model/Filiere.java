@@ -7,16 +7,14 @@ public class Filiere implements Entity {
     private Long id;
     private String name;
     private String acronym;
-    List<Module> modules = new ArrayList<>();
+    private List<Module> modules;
 
     public Filiere(String name, String acronym) {
-        super();
         this.name = name;
         this.acronym = acronym;
     }
 
     public Filiere(Long id, String name, String acronym) {
-        super();
         this.id = id;
         this.name = name;
         this.acronym = acronym;
@@ -34,6 +32,7 @@ public class Filiere implements Entity {
     public Long getId() {
         return id;
     }
+
     @Override
     public void setId(Long id) {
         this.id = id;
@@ -47,14 +46,22 @@ public class Filiere implements Entity {
         this.name = name;
     }
 
+    // Ajout d'un module à la liste
     public void addModule(Module module) {
         modules.add(module);
         module.setFiliere(this);
+    }
+
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
+    }
+
+    public List<Module> getModules() {
+        return modules;
     }
 
     @Override
     public String toString() {
         return "Filiere [id=" + id + ", name=" + name + ", acronym=" + acronym + "]";
     }
-
 }

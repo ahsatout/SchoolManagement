@@ -1,14 +1,22 @@
 package com.hyh.schoolmanagement.dao.impl;
 
-
 import com.hyh.schoolmanagement.dao.FiliereDao;
 import com.hyh.schoolmanagement.model.Filiere;
+import com.hyh.schoolmanagement.model.Module;
+import com.hyh.schoolmanagement.dao.Database;
 
-import java.util.HashMap;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.Scanner;
+import java.util.HashMap;
 
 public class FiliereDaoImpl extends DefaultDao<Filiere> implements FiliereDao {
+
+	private final Database database = Database.getInstance();
 
 	@Override
 	public String getTableName() {
@@ -22,15 +30,21 @@ public class FiliereDaoImpl extends DefaultDao<Filiere> implements FiliereDao {
 
 	@Override
 	public String[] getColumnLabels() {
-		return new String[] { getPrimaryKeyLabel(), "name", "acronym" };
+		return new String[]{getPrimaryKeyLabel(), "name", "acronym"};
 	}
 
 	@Override
 	public Filiere map(Map<String, String> filiereMap) {
-		return new Filiere(
+		Filiere filiere = new Filiere(
 				Long.parseLong(filiereMap.get("id")),
-				(String) filiereMap.get("name"),
-				(String) filiereMap.get("acronym"));
+				filiereMap.get("name"),
+				filiereMap.get("acronym")
+		);
+		// Convertir le Set en List avant de définir les modules
+		Set<Module> moduleSet = getModules(filiere);
+		List<Module> moduleList = new ArrayList<>(moduleSet); // Conversion du Set en List
+		filiere.setModules(moduleList); // Définir les modules
+		return filiere;
 	}
 
 	@Override
@@ -38,27 +52,40 @@ public class FiliereDaoImpl extends DefaultDao<Filiere> implements FiliereDao {
 		HashMap<String, String> map = new HashMap<>();
 		map.put("name", filiere.getName());
 		map.put("acronym", filiere.getAcronym());
-
 		return map;
 	}
 
-	// Demonstration
-	public static void main(String[] args) throws Exception {
-		//Scanner sc = new Scanner(System.in);
-		// Printing all professors
-		FiliereDao filiereDao = new FiliereDaoImpl();
+	private Set<Module> getModules(Filiere filiere) {
+		Set<Module> modules = new HashSet<>();
+		String query = "SELECT m.* FROM module m " +
+				"JOIN filiere_module fm ON m.id = fm.module_id " +
+				"WHERE fm.filiere_id = " + filiere.getId();
+		ResultSet rs = null;
 
-		// Adding a new professor
-		Filiere newFiliere = new Filiere("Génie Mecanique", "GM");
-		filiereDao.save(newFiliere);
-//		sc.nextLine();
+		try {
+			rs = database.executeQuery(query);
+			while (rs.next()) {
+				Module module = new Module(
+						rs.getLong("id"),
+						rs.getString("name")
+				);
+				modules.add(module);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Error fetching modules for filiere", e);
+		} finally {
+			closeResultSet(rs);
+		}
+		return modules;
+	}
 
-		// Editing a professor
-		newFiliere.setAcronym("ACRO");
-		filiereDao.update(newFiliere);
-//		sc.nextLine();
-
-		System.out.println("Removing a filiere");
-		filiereDao.delete(newFiliere.getId());
+	private void closeResultSet(ResultSet rs) {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Error closing ResultSet", e);
+		}
 	}
 }
